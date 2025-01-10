@@ -2,8 +2,10 @@
 
 set -euxo pipefail
 
-CLOUDFLARE_EMAIL="you@example.com" \
-    CLOUDFLARE_API_KEY="yourprivatecloudflareapikey" \
-    lego --email "you@example.com" --dns cloudflare --domains "example.org" run
+# 使用环境变量
+lego --email "$CLOUDFLARE_EMAIL" --dns cloudflare --domains "$DOMAIN" run
+
+# 添加续期任务到 crontab
+echo "0 0 * * * lego --email \"$CLOUDFLARE_EMAIL\" --dns cloudflare --domains \"$DOMAIN\" renew" | crontab -
 
 exec crond -n

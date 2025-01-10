@@ -1,4 +1,4 @@
 .env
 conf.d/
 node.d/
-.env.cron
+cron.env
