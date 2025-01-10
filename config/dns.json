@@ -1,0 +1,8 @@
+{
+  "tag": "inbound_dns",
+  "servers": [
+    {
+      "address": "https://cloudflare-dns.com/dns-query"
+    }
+  ]
+}
