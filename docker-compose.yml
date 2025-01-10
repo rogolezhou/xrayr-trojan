@@ -29,6 +29,7 @@ services:
       - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}  # 从 cron.env 文件中读取
       - CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}  # 从 cron.env 文件中读取
       - DOMAIN=${DOMAIN}  # 从 cron.env 文件中读取
+      - WILDCARD_DOMAIN=${WILDCARD_DOMAIN} #泛域名证书参数
     entrypoint: ["/docker-cron.sh"]  # 指定入口点
 
   nginx:
