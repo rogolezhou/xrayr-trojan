@@ -21,8 +21,9 @@ services:
     build:
       context: .  # 指定 Dockerfile 的上下文
       dockerfile: Dockerfile.cron
+    image: lego-ssl:lateat
     volumes:
-      - /path/to/certificates:/etc/lego/certificates  # 挂载证书目录
+      - ./nginx/ssl:/etc/lego/certificates  # 挂载证书目录
     env_file:
       - cron.env
     environment:
@@ -34,11 +35,10 @@ services:
 
   nginx:
     image: nginx:latest
+    network_mode: "host"  # 使用宿主机网络
     volumes:
-      - /path/to/certificates:/etc/nginx/ssl  # 挂载证书目录
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf  # 挂载 Nginx 配置
-    ports:
-      - "80:80"  # HTTP
-      - "443:443"  # HTTPS
+      - ./nginx/ssl:/etc/nginx/ssl  # 挂载证书目录
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # 挂载 Nginx 主配置文件
+      - ./nginx/conf.d:/etc/nginx/conf.d  # 挂载 Nginx 配置
     depends_on:
       - acme  # 确保 acme 服务先启动
