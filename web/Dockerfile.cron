@@ -4,9 +4,9 @@ FROM alpine:edge
 
 RUN apk add --no-cache bash curl cronie && rm -rf /var/cache/apk/*
 
-COPY --from=redis:alpine /usr/bin/redis /usr/bin/redis
-COPY --from=goacme/lego:latest /usr/bin/lego /usr/bin/lego
+COPY --from=goacme/lego:latest /lego /usr/bin/lego
 
 COPY ./docker-cron.sh /
+RUN chmod +x /docker-cron.sh
 
 ENTRYPOINT [ "/docker-cron.sh" ]

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  acme:
+    build:
+      context: .  # 指定 Dockerfile 的上下文
+      dockerfile: Dockerfile.cron
+    image: lego-ssl:lateat
+    volumes:
+      - ${CERTS_DIR}:/etc/lego/certificates  # 挂载证书目录
+    env_file:
+      - cron.env
+    entrypoint: ["/docker-cron.sh"]  # 指定入口点
+
+  nginx:
+    image: nginx:latest
+    network_mode: "host"  # 使用宿主机网络
+    volumes:
+      - ${NGINX_DIR}:/etc/nginx # 挂载nginx配置文件目录
+      - ${WEB_DIR}:/mnt/www # 挂载伪装网站
+      - ${CERTS_DIR}:/certs # 挂载ssl证书

@@ -4,7 +4,7 @@ ApiConfig:
   ApiHost: https://example.com
   ApiKey: SecretKey
   NodeID: 0
-  NodeType: Trojan
+  NodeType: v2ray
   Timeout: 5
   EnableVless: false
   EnableXTLS: false
@@ -14,7 +14,7 @@ ApiConfig:
   DisableCustomConfig: false
 
 ControllerConfig:
-  ListenIP: 0.0.0.0
+  ListenIP: 127.0.0.1
   SendIP: 0.0.0.0
   UpdatePeriodic: 60
   EnableDNS: true
@@ -50,7 +50,7 @@ ControllerConfig:
       ProxyProtocolVer: 0
 
   CertConfig:
-    CertMode: file
+    CertMode: none
     RejectUnknownSni: false
     CertDomain: example.com
     CertFile: /tmp/xrayr/cert/example.com.cert

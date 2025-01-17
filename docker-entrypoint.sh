@@ -10,6 +10,10 @@ tmp=/tmp/xrayr
 
 url=https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download
 
+echo "Checking for node.yaml..."
+ls -l "$etc"
+echo "NODES: $NODES"
+
 files_exist() {
     ls "$1" >/dev/null 2>&1
 }
@@ -28,11 +32,19 @@ files_exist "$etc"/*.json &&
         sed -E '/^\/\/.*/d; /^\W+\/\/.*/d' "$file" >"/tmp/xrayr/$(basename "$file")"
     done
 
-files_exist "$etc/conf.d"/*.yaml &&
+if files_exist "$etc/conf.d"/*.yaml; then
     yq_eval_all "$etc/config.yaml" "$etc/conf.d/"*.yaml >"$tmp/config.yaml"
+else
+    cp "$etc/config.yaml" "$etc/conf.d/config.yaml"
+    yq_eval_all "$etc/config.yaml" "$etc/conf.d/"*.yaml >"$tmp/config.yaml"
+fi
 
-files_exist "$etc/node.d"/*.yaml &&
+if files_exist "$etc/node.d"/*.yaml; then
     yq_eval_all "$etc/node.yaml" "$etc/node.d/"*.yaml >"$tmp/node.yaml"
+else
+    cp "$etc/node.yaml" "$etc/node.d/node.yaml"
+    yq_eval_all "$etc/node.yaml" "$etc/node.d/"*.yaml >"$tmp/node.yaml"
+fi
 
 IFS="," read -r -a node_arr <<<"$NODES"
 for node in "${node_arr[@]}"; do

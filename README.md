@@ -1,5 +1,16 @@
 # docker-xrayr
 
+##nginx&ssl
+start up nginx and lego frist!
+'''
+cd web
+'''
+to get default nginx dir first
+'''
+docker compose up -d
+'''
+now the ssl and nginx dir in '/mnt' on your host
+
 XrayR in Docker container
 
 ## Usage
