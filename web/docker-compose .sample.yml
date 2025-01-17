@@ -2,7 +2,10 @@ version: '3'
 
 services:
   acme:
-    image: rogolezhou/lego-ssl:lateat
+    build:
+      context: .  # 指定 Dockerfile 的上下文
+      dockerfile: Dockerfile.cron
+    image: lego-ssl:lateat
     volumes:
       - ${CERTS_DIR}:/etc/lego/certificates  # 挂载证书目录
     env_file:
